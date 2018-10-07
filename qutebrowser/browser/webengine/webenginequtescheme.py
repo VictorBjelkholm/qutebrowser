@@ -26,6 +26,7 @@ from PyQt5.QtWebEngineCore import (QWebEngineUrlSchemeHandler,
 from qutebrowser.browser import qutescheme
 from qutebrowser.utils import log, qtutils
 
+print('loaded QuteSchemaHandler')
 
 class QuteSchemeHandler(QWebEngineUrlSchemeHandler):
 

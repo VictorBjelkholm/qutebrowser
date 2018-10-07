@@ -35,6 +35,7 @@ from qutebrowser.config import configdata, config
 from qutebrowser.browser import browsertab, mouse, shared, webelem
 from qutebrowser.browser.webengine import (webview, webengineelem, tabhistory,
                                            interceptor, webenginequtescheme,
+                                           webengineipfsscheme,
                                            cookies, webenginedownloads,
                                            webenginesettings, certificateerror)
 from qutebrowser.misc import miscwidgets
@@ -44,6 +45,7 @@ from qutebrowser.qt import sip
 
 
 _qute_scheme_handler = None
+_ipfs_scheme_handler = None
 
 
 def init():
@@ -52,12 +54,18 @@ def init():
     # won't work...
     # https://www.riverbankcomputing.com/pipermail/pyqt/2016-September/038075.html
     global _qute_scheme_handler
+    global _ipfs_scheme_handler
 
     app = QApplication.instance()
     log.init.debug("Initializing qute://* handler...")
     _qute_scheme_handler = webenginequtescheme.QuteSchemeHandler(parent=app)
     _qute_scheme_handler.install(webenginesettings.default_profile)
     _qute_scheme_handler.install(webenginesettings.private_profile)
+
+    log.init.debug("Initializing ipfs://* handler...")
+    _ipfs_scheme_handler = webengineipfsscheme.IPFSSchemeHandler(parent=app)
+    _ipfs_scheme_handler.install(webenginesettings.default_profile)
+    _ipfs_scheme_handler.install(webenginesettings.private_profile)
 
     log.init.debug("Initializing request interceptor...")
     host_blocker = objreg.get('host-blocker')

@@ -142,6 +142,7 @@ class UrlPattern:
         Deviation from Chromium:
         - We assume * when no scheme has been given.
         """
+
         if not parsed.scheme:
             raise ParseError("Missing scheme")
 
